@@ -28,9 +28,9 @@ def atbash(message):
 data = []
 i = 0
 
-while i < 10000:
+while i < 1500:
         
-    text = Random_Word(random.randint(1, 10))
+    text = Random_Word(random.randint(4, 10))
 
     print ("Text  : " + text)
     print ("Cipher: " + atbash(text))

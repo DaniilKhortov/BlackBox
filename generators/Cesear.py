@@ -18,7 +18,7 @@ data = []
 while s < 26:
     while i < 1000:
         
-        text = Random_Word(random.randint(1, 10))
+        text = Random_Word(random.randint(4, 10))
 
         print ("Text  : " + text)
         print ("Cipher: " + encrypt(text,s))
