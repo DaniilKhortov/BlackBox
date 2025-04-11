@@ -65,5 +65,5 @@ def predict_method(word):
     return le.inverse_transform([pred])[0]
 
 # Приклад
-example = "ellohay"
+example = "wrhkozb"
 print("Метод шифрування:", predict_method(example))
