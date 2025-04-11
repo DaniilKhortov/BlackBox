@@ -3,8 +3,9 @@ from pymongo import MongoClient
 # Підключення до MongoDB
 client = MongoClient("mongodb://localhost:27017/")  
 db = client["EnigmaticCodes"]
-# collection = db["Atbash"]
-collection = db["Caesar"]
+#collection = db["Atbash"]
+#collection = db["Caesar"]
+collection = db["PL"]
 
 pipeline = [
     {"$group": {
