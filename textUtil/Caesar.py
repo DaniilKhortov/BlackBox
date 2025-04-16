@@ -12,7 +12,7 @@ def encrypt(text,s):
 s = 1
 data = []
 
-while s < 26:
+while s < 5:
     for word in wordsUnique:
         print ("Text  : " + word)
         print ("Cipher: " + encrypt(word,s))

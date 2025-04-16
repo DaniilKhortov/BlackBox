@@ -58,5 +58,5 @@ def predict_method(word):
     return le.inverse_transform([pred])[0]
 
 # Приклад
-example = "yllclczovz"  # слово, зашифроване Атбашем (наприклад для "test")
+example = "svool"  # слово, зашифроване Атбашем (наприклад для "test")
 print("Шифр:", predict_method(example))

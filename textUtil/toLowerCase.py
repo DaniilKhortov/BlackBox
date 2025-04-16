@@ -7,7 +7,7 @@ with open("text.txt", "r", encoding="utf-8") as file:
 wordsUnique = {"seal", "walrus"}
 for word in words:
     word = word.lower()
-    word = word.replace('\u2060', '').replace(';', '').replace('?', '').replace('”', '').replace('—', '').replace('-', '').replace('“', '').replace('ä', 'a').replace('’', '').replace(':', '')
+    word = word.replace('\u2060', '').replace(';', '').replace('…', '').replace('ü', 'u').replace('ö', 'u').replace('!', '').replace(',', '').replace('?', '').replace('‘', '').replace('”', '').replace('—', '').replace('-', '').replace('“', '').replace('ä', 'a').replace('’', '').replace(':', '')
     word = word.strip(string.punctuation)  
     wordsUnique.add(word)
 
