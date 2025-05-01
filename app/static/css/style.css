@@ -1,5 +1,6 @@
 /*reset css*/
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -72,7 +73,7 @@ header {
 
     }
 
-    .title h1{
+/*    .title h1{
         font-family:"VT323";
         font-size:120px;
         font-weight:700;
@@ -90,8 +91,28 @@ header {
     align-items: center;
     justify-content: center;
     margin: 10px 20px 0px 30px;
-
 }
+*/
+
+.title h1 {
+    font-family: "Press Start 2P";
+    font-size: 80px;
+    font-weight: 700;
+    color: white;
+    margin-top: 15px;
+}
+
+.icon {
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 20px 0px 30px;
+}
+
 
     .icon img {
         width: 110px;
@@ -190,19 +211,21 @@ button {
         justify-content: space-around;
     }
 
-    .output-types div {
-        width: 75px;
-        height: 75px;
-        background-color: gray;
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "VT323";
-        font-size: 54px;
-        font-weight: 600;
-        color: white;
-    }
+.type-sign-At, .type-sign-Cs, .type-sign-PL {
+    width: 75px;
+    height: 75px;
+    background-color: gray;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "VT323";
+    font-size: 54px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 0 0 5px #c9c9c9;
+}
+
 
 
 .output-field {
@@ -212,3 +235,22 @@ button {
 .results {
     margin: 30px auto 10px auto;
 }
+
+.type-sign-At-Highlight{
+    background: #7F00FF;
+    background: linear-gradient(23deg,rgba(127, 0, 255, 1) 0%, rgba(201, 83, 237, 1) 100%);
+    box-shadow: 0 0 0 5px #d03ffc;
+
+} 
+
+.type-sign-Cs-Highlight{
+    background: #0dff00;
+    background: linear-gradient(23deg,rgba(13, 255, 0, 1) 0%, rgba(83, 222, 237, 1) 65%);
+    box-shadow: 0 0 0 5px #b8feff;
+} 
+
+.type-sign-PL-Highlight{
+    background: #e600ff;
+    background: linear-gradient(23deg,rgba(230, 0, 255, 1) 0%, rgba(237, 86, 83, 1) 74%);
+    box-shadow: 0 0 0 5px #fc3567;
+} 

@@ -11,6 +11,33 @@ def home():
     
     return render_template('index.html', image_url=imgURL)
 
+@main.route("/decrypt", methods=["POST"])
+def decrypt():
+    data = request.get_json()
 
-# @main.route("/login", methods=["GET", "POST"])
-# def login():
+    text = data.get("text", "") if data else ""
+    
+
+    #Тут надсилається тип шифру та розшифрований текст на сервер
+    result = {
+        "Type": "atbash",
+        "Result" : text
+    }
+    
+    # result = {
+    #     "Type": "caesar",
+    #     "Result" : text
+    # }
+    # result = {
+    #     "Type": "pl",
+    #     "Result" : text
+    # } 
+    
+    #Це вивід помилки на сайті
+    # result = {
+    #     "Type": "err",
+    #     "Result" : "Error!"
+    # }
+    
+    return jsonify({"result": result})
+

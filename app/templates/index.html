@@ -32,23 +32,23 @@
         <div class="cipher-block-content">
             <div class="input-text">
                 <p>Input text</p>
-                <textarea id="message" name="message" rows="6" cols="100" required></textarea><br><br>
+                <textarea id="messageBoxI" name="message" rows="6" cols="100" required></textarea><br><br>
             </div>
             <div class="input-operators">
-                <p></p>
-                <button type="button">Process</button>
+                <p id="errMessage"></p>
+                <button type="button" id="IBtn" onclick="decrypt()">Process</button>
             </div>
 
             <p class="results">Results</p>
 
             <div class="output-types">
-                <div class="type-sign-At"><p>At</p></div>
-                <div class="type-sign-Cs"><p>Cs</p></div>
-                <div class="type-sign-PL"><p>PL</p></div>
+                <div class="type-sign-At" id="At"><p>At</p></div>
+                <div class="type-sign-Cs" id="Cs"><p>Cs</p></div>
+                <div class="type-sign-PL" id="PL"><p>PL</p></div>
             </div>
             <div class="output-field">
                 <div class="output-field-text">
-                    <textarea id="message" name="message" rows="6" cols="100" required></textarea><br><br>
+                    <textarea id="messageBoxO" name="message" rows="6" cols="100" required></textarea><br><br>
                 </div>
 
             </div>
