@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html en>
+<head>
+    <meta charset="utf-8">
+    <title>Black Box</title>
+    <!--<link rel="icon" href="./icon.png">-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="description(not required)">
+
+    <!--main styles-->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!--<link rel="stylesheet" href="css/style.css">-->
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="content">
+            <div class="title">
+                <h1>Black box</h1>
+            </div>
+            <div class="icon">
+                <img src="{{image_url}}">
+            </div>
+        </div>
+    </header>
+
+    <div class="cipher-block">
+        <div class="cipher-block-content">
+            <div class="input-text">
+                <p>Input text</p>
+                <textarea id="message" name="message" rows="6" cols="100" required></textarea><br><br>
+            </div>
+            <div class="input-operators">
+                <p></p>
+                <button type="button">Process</button>
+            </div>
+
+            <p class="results">Results</p>
+
+            <div class="output-types">
+                <div class="type-sign-At"><p>At</p></div>
+                <div class="type-sign-Cs"><p>Cs</p></div>
+                <div class="type-sign-PL"><p>PL</p></div>
+            </div>
+            <div class="output-field">
+                <div class="output-field-text">
+                    <textarea id="message" name="message" rows="6" cols="100" required></textarea><br><br>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!--script section-->
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <!--<script src="{{ url_for('static', filename='js/download.js') }}"></script>-->
+</body>
+</html>
+
