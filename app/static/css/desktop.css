@@ -1,0 +1,132 @@
+@media screen and (min-width: 350px) and (max-width: 1270px) {
+    .input-text textarea, .output-field textarea {
+        font-size: 7px;
+    }
+
+    .title h1 {
+        font-size: 36px;
+    }
+
+    .output-field {
+        margin: 0px;
+    }
+
+    .output-types {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+
+    .type-sign-At, .type-sign-Cs, .type-sign-PL {
+        width: 45px;
+        height: 45px;
+        font-size: 24px;
+        border-radius: 7px;
+    }
+
+    .input-text p, .results {
+        font-size: 30px;
+    }
+
+    .input-operators {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 450px) and (max-width: 1270px) {
+    .input-operators {
+        width: 80%;
+    }
+
+    .title h1 {
+        font-size: 48px;
+        margin-top: 25px;
+    }
+
+    .output-types {
+        width: 80%;
+        margin-top: 10px;
+    }
+
+    .input-text textarea, .output-field textarea {
+        font-size: 10px;
+    }
+
+    .output-field {
+        margin-top: 20px;
+
+    }
+
+    .input-text p, .results {
+        font-size: 45px;
+    }
+
+
+}
+@media screen and (min-width: 700px) and (max-width: 1270px) {
+    .input-operators {
+        width: 70%;
+    }
+
+    .title h1 {
+        font-size: 56px;
+        margin-top: 25px;
+    }
+
+    .type-sign-At, .type-sign-Cs, .type-sign-PL {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+        border-radius: 7px;
+    }
+    .input-text textarea, .output-field textarea {
+        font-size: 14px;
+
+    }
+}
+@media screen and (min-width: 800px) and (max-width: 1270px) {
+
+
+    .output-types {
+
+        margin-top: 10px;
+    }
+
+    .title h1 {
+        font-size: 56px;
+        margin-top: 25px;
+    }
+
+    .type-sign-At, .type-sign-Cs, .type-sign-PL {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+        border-radius: 7px;
+    }
+}
+
+@media screen and (min-width: 950px) and (max-width: 1270px) {
+    .input-text textarea, .output-field textarea {
+        font-size: 18px;
+    }
+
+    .output-types {
+
+        margin-top: 10px;
+    }
+
+    .title h1 {
+        font-size: 72px;
+        margin-top: 25px;
+    }
+
+
+}
+
+@media screen and (min-width: 2000px){
+    .input-text textarea, .output-field textarea {
+        font-size: 32px;
+    }
+
+
+}
