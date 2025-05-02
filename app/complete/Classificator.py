@@ -6,13 +6,14 @@ import numpy as np
 import string
 from typing import Tuple, List, Dict, Optional
 import re 
-
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 ALLOWED_CHARS_PATTERN = re.compile(r"^[a-zA-Z0-9\s" + re.escape(string.punctuation) + r"]*$")
 
 try:
-    from Atbash import AtbashDecryptor # Повертає str
-    from Caesar import CaesarDecryptor # Повертає Tuple[Optional[int], str]
-    from Pl import PigLatinDecryptor     # Повертає str
+    from .Atbash import AtbashDecryptor # Повертає str
+    from .Caesar import CaesarDecryptor # Повертає Tuple[Optional[int], str]
+    from .Pl import PigLatinDecryptor     # Повертає str
     DECRYPTORS_IMPORTED = True
 except ImportError as e:
     # Зберігаємо повідомлення про помилку імпорту

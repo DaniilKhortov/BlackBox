@@ -1,9 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, make_response, jsonify, send_file
 
+
 import os
 from datetime import datetime
 from sqlalchemy import func
 main = Blueprint('main', __name__)
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+from .complete.Classificator import decrypt_sentence_interface, initialize_system
+
+initialize_system()
 
 @main.route("/")
 def home():
@@ -17,27 +23,33 @@ def decrypt():
 
     text = data.get("text", "") if data else ""
     
+    initialize_system()
+    cipher_type, result, msgs = decrypt_sentence_interface(text)
+    print(f"\n--- Вхід: '{text}' ---")
+    print(f"Тип шифру: {cipher_type}")
+    print(f"Результат: '{result}'")
+    print("Повідомлення:")
+    for msg in msgs:
+        print(f"  - {msg}")
+    print("-" * 60)
 
     #Тут надсилається тип шифру та розшифрований текст на сервер
     result = {
-        "Type": "atbash",
-        "Result" : text
-    }
-    
-    # result = {
-    #     "Type": "caesar",
-    #     "Result" : text
-    # }
+          "Type": cipher_type,
+          "Result" : result
+        }
     # result = {
     #     "Type": "pl",
     #     "Result" : text
     # } 
     
     #Це вивід помилки на сайті
-    # result = {
-    #     "Type": "err",
-    #     "Result" : "Error!"
-    # }
+    if msgs != "":
+        result = {
+         "Type": "err",
+         "Result" : msgs
+     }
+     
     
     return jsonify({"result": result})
 
