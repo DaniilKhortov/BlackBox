@@ -17,7 +17,7 @@ try:
     DECRYPTORS_IMPORTED = True
 except ImportError as e:
     # Зберігаємо повідомлення про помилку імпорту
-    INITIAL_IMPORT_ERROR = f"ПОМИЛКА імпорту дешифраторів: {e}. Дешифрування буде неможливе."
+    INITIAL_IMPORT_ERROR = f"ERROR importing decryptors: {e}. Decryption will be impossible."
     print(INITIAL_IMPORT_ERROR) # Виводимо одразу для ясності
     AtbashDecryptor = None
     CaesarDecryptor = None
@@ -43,7 +43,7 @@ def loadData():
     data = []
     
     #Перенесення шифрованих слів з колекції у масив з tuple (Слово, шифр). 
-    for method, label in [('Atbash_real', 'atbash'), ('Caesar_real', 'caesar'), ('PL_real', 'pl')]:
+    for method, label in [('Atbash', 'atbash'), ('Caesar', 'caesar'), ('PL', 'pl')]:#_real
         collection = db[method]
         for doc in collection.find({}, {'Encripted': 1, '_id': 0}):
             word = doc['Encripted']
@@ -131,7 +131,7 @@ def initialize_system():
     # 1. Навчання Класифікатора
     training_data = loadData()
     if not training_data:
-        initialization_messages.append("КРИТИЧНО: Немає даних для навчання класифікатора. Ініціалізація зупинена.")
+        initialization_messages.append("CRITICAL: No data to train the classifier. Initialization stopped.")
         return
 
     try:
@@ -148,16 +148,16 @@ def initialize_system():
              else:
                  invalid_feature_count += 1
         if invalid_feature_count > 0:
-             initialization_messages.append(f"ПОПЕРЕДЖЕННЯ: Пропущено {invalid_feature_count} слів через некоректні ознаки.")
+             initialization_messages.append(f"WARNING: {invalid_feature_count} words omitted due to invalid features.")
         if not features_list:
-             initialization_messages.append("КРИТИЧНО: Не вдалося виділити ознаки для жодного слова. Ініціалізація зупинена.")
+             initialization_messages.append("CRITICAL: Failed to extract features for any words. Initialization stopped.")
              return
 
         x = np.array(features_list)
         y = np.array(labels_list)
 
     except Exception as e:
-        initialization_messages.append(f"КРИТИЧНО: Помилка під час формування масивів ознак/міток: {e}. Ініціалізація зупинена.")
+        initialization_messages.append(f"CRITICAL: Error while generating feature/label arrays: {e}. Initialization stopped.")
         return
 
     le = LabelEncoder()
@@ -165,13 +165,13 @@ def initialize_system():
         yEncoded = le.fit_transform(y)
         #initialization_messages.append(f"ІНФО: Мітки класів закодовано: {dict(zip(le.classes_, le.transform(le.classes_)))}")
     except Exception as e:
-        initialization_messages.append(f"КРИТИЧНО: Помилка кодування міток: {e}. Ініціалізація зупинена.")
+        initialization_messages.append(f"CRITICAL: Label encoding error: {e}. Initialization stopped.")
         le = None; return
 
     try:
         # Перевірка, чи достатньо даних для розділення
         if len(np.unique(yEncoded)) < 2 or x.shape[0] < 2:
-             initialization_messages.append("ПОПЕРЕДЖЕННЯ: Недостатньо даних або класів для розділення на train/test. Навчання на всіх даних.")
+             initialization_messages.append("WARNING: Not enough data or classes to split into train/test. Training on all data.")
              xTrain, yTrain = x, yEncoded
              test_acc_msg = "Оцінка точності не проводилась."
         else:
@@ -180,7 +180,7 @@ def initialize_system():
              try:
                  xTrain, xTest, yTrain, yTest = train_test_split(x, yEncoded, test_size=test_size, random_state=42, stratify=yEncoded)
              except ValueError:
-                 initialization_messages.append("ПОПЕРЕДЖЕННЯ: Не вдалося виконати стратифіковане розділення, виконується звичайне.")
+                 initialization_messages.append("WARNING: Stratified partitioning failed, performing normal partitioning.")
                  xTrain, xTest, yTrain, yTest = train_test_split(x, yEncoded, test_size=test_size, random_state=42)
 
              clf = RandomForestClassifier(n_estimators=150, random_state=42, class_weight='balanced')
@@ -194,7 +194,7 @@ def initialize_system():
         #initialization_messages.append(f"ІНФО: Класифікатор навчено на {x.shape[0]} прикладах. {test_acc_msg}")
 
     except Exception as e:
-        initialization_messages.append(f"КРИТИЧНО: Помилка тренування/оцінки класифікатора: {e}. Ініціалізація зупинена.")
+        initialization_messages.append(f"CRITICAL: Classifier training/scoring error: {e}. Initialization stopped.")
         clf = None; return
 
     # 2. Ініціалізація Дешифраторів
@@ -224,22 +224,22 @@ def initialize_system():
                          #msg_list.append(f"ПОМИЛКА: Ініціалізація {name} не вдалася (конструктор не повернув об'єкт).")
                          init_decryptor_errors = True
                 except Exception as init_e:
-                    msg_list.append(f"ПОМИЛКА: Неочікувана помилка ініціалізації {name}: {init_e}")
+                    msg_list.append(f"ERROR: Unexpected initialization error {name}: {init_e}")
                     init_decryptor_errors = True
             else:
-                msg_list.append(f"ПОПЕРЕДЖЕННЯ: Клас {name} не імпортовано.")
+                msg_list.append(f"WARNING: Class {name} not imported.")
                 init_decryptor_errors = True # Вважаємо помилкою, якщо мав бути
             return decryptor, msg_list
 
-        enigma_a, msgs_a = init_decryptor(AtbashDecryptor, "Atbash", 'Atbash_real')
+        enigma_a, msgs_a = init_decryptor(AtbashDecryptor, "Atbash", 'Atbash')#(2)_real
         initialization_messages.extend(msgs_a)
-        enigma_c, msgs_c = init_decryptor(CaesarDecryptor, "Caesar", 'Caesar_real')
+        enigma_c, msgs_c = init_decryptor(CaesarDecryptor, "Caesar", 'Caesar')#(2)_real
         initialization_messages.extend(msgs_c)
-        enigma_pl, msgs_pl = init_decryptor(PigLatinDecryptor, "Pig Latin", 'PL_real')
+        enigma_pl, msgs_pl = init_decryptor(PigLatinDecryptor, "Pig Latin", 'PL')#(2)_real
         initialization_messages.extend(msgs_pl)
 
     else: # Якщо імпорт не вдався
-        initialization_messages.append("ПОМИЛКА: Дешифратори не були імпортовані. Ініціалізація дешифраторів пропущена.")
+        initialization_messages.append("ERROR: Decryptors were not imported. Decryptor initialization was skipped.")
         init_decryptor_errors = True
 
     # Ставимо is_initialized=True, тільки якщо ВСЕ необхідне готове
@@ -247,7 +247,8 @@ def initialize_system():
         is_initialized = True
         #initialization_messages.append("ІНФО: Ініціалізація системи успішно завершена.")
     else:
-         initialization_messages.append("ПОМИЛКА: Ініціалізація системи НЕ завершена через помилки.")
+         initialization_messages.append("ERROR: System initialization NOT completed due to errors.")
+    print("initialize_system успішно")     
 
 
 # --- Функція прогнозу для одного слова (без змін, але з перевіркою clf/le) ---
@@ -280,7 +281,7 @@ def decrypt_sentence_interface(encrypted_sentence: str) -> Tuple[Optional[str], 
         initialize_system()
         messages.extend(initialization_messages) # Додаємо всі повідомлення ініціалізації
         if not is_initialized:
-            messages.append("ПОМИЛКА: Не вдалося ініціалізувати систему. Дешифрування неможливе.")
+            messages.append("ERROR: Failed to initialize system. Decryption is not possible.")
             # Повертаємо None як тип, оригінальне речення і зібрані повідомлення
             return None, encrypted_sentence, messages
 
@@ -288,16 +289,16 @@ def decrypt_sentence_interface(encrypted_sentence: str) -> Tuple[Optional[str], 
 
     # 2. Валідація вхідного речення
     if not isinstance(encrypted_sentence, str) or not encrypted_sentence.strip():
-        messages.append("ПОМИЛКА: Вхідне речення порожнє або не є рядком.")
+        messages.append("ERROR: The input sentence is empty or not a string.")
         return None, encrypted_sentence, messages
     if not ALLOWED_CHARS_PATTERN.match(encrypted_sentence):
-        messages.append("ПОМИЛКА: Вхідне речення містить недозволені символи.")
+        messages.append("ERROR: The input sentence contains illegal characters.")
         return None, encrypted_sentence, messages
 
     # 3. Підготовка вхідних даних
     input_words = prepareData(encrypted_sentence)
     if not input_words:
-        messages.append("ПОПЕРЕДЖЕННЯ: Не знайдено слів для аналізу після очищення речення.")
+        messages.append("WARNING: No words were found to analyze after cleaning the sentence.")
         return None, encrypted_sentence, messages
 
     # 4. Прогнозування класу для кожного слова
@@ -310,14 +311,14 @@ def decrypt_sentence_interface(encrypted_sentence: str) -> Tuple[Optional[str], 
             predicted_classes.append(predicted_class)
             #messages.append(f"  Слово: '{word}' -> Прогноз: {predicted_class}")
         else:
-            messages.append(f"ПОПЕРЕДЖЕННЯ: Не вдалося спрогнозувати тип для слова '{word}'.")
+            messages.append(f"WARNING: Unable to predict type for word '{word}'.")
             prediction_errors += 1
 
     if not predicted_classes:
-        messages.append("ПОМИЛКА: Не вдалося визначити тип шифру для жодного слова.")
+        messages.append("ERROR: Unable to determine the cipher type for any word.")
         return None, encrypted_sentence, messages
     if prediction_errors > 0:
-         messages.append(f"ПОПЕРЕДЖЕННЯ: Не вдалося спрогнозувати тип для {prediction_errors} слів.")
+         messages.append(f"WARNING: Failed to predict type for {prediction_errors} words.")
 
     # 5. Визначення основного шифру речення
     sentence_class = mostFrequent(predicted_classes)
@@ -334,7 +335,7 @@ def decrypt_sentence_interface(encrypted_sentence: str) -> Tuple[Optional[str], 
             if decryptor_instance:
                 decrypted_sentence = decryptor_instance.decrypt(encrypted_sentence)
                 #messages.append("ІНФО: Застосовано дешифратор Atbash.")
-            else: messages.append("ПОМИЛКА: Дешифратор Atbash не ініціалізований!")
+            else: messages.append("ERROR: Atbash decoder not initialized!")
         elif sentence_class == "caesar":
             decryptor_instance = enigma_c
             if decryptor_instance:
@@ -343,17 +344,17 @@ def decrypt_sentence_interface(encrypted_sentence: str) -> Tuple[Optional[str], 
                     decrypted_sentence = decrypted_text_c
                    # messages.append(f"ІНФО: Застосовано дешифратор Caesar (зсув: {identified_shift}).")
                 else:
-                     messages.append("ПОПЕРЕДЖЕННЯ: Дешифратор Caesar не зміг визначити зсув.")
+                     messages.append("WARNING: The Caesar decoder was unable to determine the offset.")
                      detected_cipher_type = None # Вважаємо, що дешифрування не вдалося
-            else: messages.append("ПОМИЛКА: Дешифратор Caesar не ініціалізований!")
+            else: messages.append("ERROR: Caesar decoder not initialized!")
         elif sentence_class == "pl":
             decryptor_instance = enigma_pl
             if decryptor_instance:
                 decrypted_sentence = decryptor_instance.decrypt(encrypted_sentence)
                 #messages.append("ІНФО: Застосовано дешифратор Pig Latin.")
-            else: messages.append("ПОМИЛКА: Дешифратор Pig Latin не ініціалізований!")
+            else: messages.append("ERROR: Pig Latin decoder not initialized!")
         else:
-            messages.append(f"ПОПЕРЕДЖЕННЯ: Невідомий тип шифру '{sentence_class}'.")
+            messages.append(f"WARNING: Unknown cipher type '{sentence_class}'.")
             detected_cipher_type = None
 
         # Якщо відповідний дешифратор не був ініціалізований, скидаємо тип
@@ -361,7 +362,7 @@ def decrypt_sentence_interface(encrypted_sentence: str) -> Tuple[Optional[str], 
             detected_cipher_type = None
 
     except Exception as e:
-        messages.append(f"КРИТИЧНО: Помилка під час виклику .decrypt() для '{sentence_class}': {e}")
+        messages.append(f"CRITICAL: Error calling .decrypt() for '{sentence_class}': {e}")
         decrypted_sentence = encrypted_sentence # Повертаємо оригінал
         detected_cipher_type = None
 

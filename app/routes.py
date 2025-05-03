@@ -24,10 +24,10 @@ def decrypt():
     text = data.get("text", "") if data else ""
     
     initialize_system()
-    cipher_type, result, msgs = decrypt_sentence_interface(text)
+    cipher_type, result_s, msgs = decrypt_sentence_interface(text)
     print(f"\n--- Вхід: '{text}' ---")
     print(f"Тип шифру: {cipher_type}")
-    print(f"Результат: '{result}'")
+    print(f"Результат: '{result_s}'")
     print("Повідомлення:")
     for msg in msgs:
         print(f"  - {msg}")
@@ -36,15 +36,14 @@ def decrypt():
     #Тут надсилається тип шифру та розшифрований текст на сервер
     result = {
           "Type": cipher_type,
-          "Result" : result
+          "Result" : result_s
         }
     # result = {
     #     "Type": "pl",
     #     "Result" : text
     # } 
-    
     #Це вивід помилки на сайті
-    if msgs != "":
+    if cipher_type == None:
         result = {
          "Type": "err",
          "Result" : msgs
