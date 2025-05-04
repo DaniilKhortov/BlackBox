@@ -104,12 +104,12 @@ def score_frequency_match(text_freq: Dict[str, float]) -> float:
 
 # --- Клас Дешифратора Цезаря---
 class CaesarDecryptor:
-    EXPECTED_SHIFTS = {1, 2, 3, 4}
+    EXPECTED_SHIFTS = set(range(1, 26))
 
     def __init__(self, db_name: str, collection_name: str, connection_string: str = "mongodb://localhost:27017/"):
         self.learned_mappings: Dict[int, Dict[str, str]] = {}
         required_cols = ['Original', 'Slide', 'Encripted']
-        self.EXPECTED_SHIFTS = {1, 2, 3, 4} 
+        self.EXPECTED_SHIFTS = set(range(1, 26))
 
         dataframe = load_data_from_mongo(db_name, collection_name, required_cols, connection_string)
 
