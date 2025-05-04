@@ -12,12 +12,14 @@ def encrypt(text,s):
 s = 1
 data = []
 
-while s < 5:
+while s < 26:
     for word in wordsUnique:
         print ("Text  : " + word)
         print ("Cipher: " + encrypt(word,s))
         mydict = { "Original": word, "Slide": s, "Encripted": encrypt(word,s) }
-        data.append(mydict)
+        if mydict["Original"] != "":
+            data.append(mydict)
+            
     s+=1    
 with open('data.csv', 'w', newline='', encoding='utf-8') as file:
     writer = csv.DictWriter(file, fieldnames=["Original", "Slide", "Encripted"])

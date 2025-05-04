@@ -1,6 +1,7 @@
-import string
+import string, os
 
-with open("text.txt", "r", encoding="utf-8") as file:
+
+with open(os.path.abspath("text.txt"), "r", encoding="utf-8") as file:
     content = file.read()
     words = content.split()
 
