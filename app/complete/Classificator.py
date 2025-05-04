@@ -9,6 +9,7 @@ import re
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 ALLOWED_CHARS_PATTERN = re.compile(r"^[a-zA-Z0-9\s" + re.escape(string.punctuation) + r"]*$")
+import matplotlib.pyplot as plt
 
 try:
     from .Atbash import AtbashDecryptor # Повертає str
@@ -250,7 +251,28 @@ def initialize_system():
          initialization_messages.append("ERROR: System initialization NOT completed due to errors.")
     print("initialize_system успішно")     
 
+    # importances = clf.feature_importances_
+    # plt.figure(figsize=(10, 5))
+    # plt.bar(range(len(importances)), importances)
+    # plt.title("Важливість ознак (Feature Importance)")
+    # plt.xlabel("Індекс ознаки")
+    # plt.ylabel("Вага")
+    # plt.show()
+    # accuracies = []
+    # n_estimators_range = range(10, 201, 10)
+    # for n in n_estimators_range:
+    #     model = RandomForestClassifier(n_estimators=n, random_state=42)
+    #     model.fit(xTrain, yTrain)
+    #     acc = model.score(xTest, yTest)
+    #     accuracies.append(acc)
 
+    # plt.plot(n_estimators_range, accuracies, marker='o')
+    # plt.title("Точність залежно від n_estimators")
+    # plt.xlabel("Кількість дерев (n_estimators)")
+    # plt.ylabel("Точність")
+    # plt.grid(True)
+    # plt.show()
+    
 # --- Функція прогнозу для одного слова (без змін, але з перевіркою clf/le) ---
 def predictMethod(word: str) -> Optional[str]:
     if not clf or not le: return None # Перевірка наявності моделей
