@@ -251,13 +251,13 @@ def initialize_system():
          initialization_messages.append("ERROR: System initialization NOT completed due to errors.")
     print("initialize_system успішно")     
 
-    importances = clf.feature_importances_
-    plt.figure(figsize=(10, 5))
-    plt.bar(range(len(importances)), importances)
-    plt.title("Важливість ознак (Feature Importance)")
-    plt.xlabel("Індекс ознаки")
-    plt.ylabel("Вага")
-    plt.show()
+    # importances = clf.feature_importances_
+    # plt.figure(figsize=(10, 5))
+    # plt.bar(range(len(importances)), importances)
+    # plt.title("Важливість ознак (Feature Importance)")
+    # plt.xlabel("Індекс ознаки")
+    # plt.ylabel("Вага")
+    # plt.show()
     
     # accuracies = []
     # n_estimators_range = range(10, 201, 10)
