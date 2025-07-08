@@ -26,4 +26,3 @@ with open('data.csv', 'w', newline='', encoding='utf-8') as file:
     writer.writeheader()  
     writer.writerows(data)    
     
-    
