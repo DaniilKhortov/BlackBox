@@ -1,6 +1,4 @@
 # Black box code breaker
-(Description still in progress)
-# File Exchanger
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -19,28 +17,19 @@
       </ul>
     </li>
     <li>
-      <a href="#usage">Usage</a>
+      <a href="#application-launch">Application launch </a>
     </li>
     <li>
       <a href="#project-structure">Project Structure</a>
     </li>
     <li>
       <a href="#database">Database</a>
-      <ul>
-        <li><a href="#table-structures">Table Structures</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#server-functions">Server Functions</a>
-    </li>
-    <li>
-      <a href="#contact">Contact</a>
     </li>
   </ol>
 </details>
 
 ## About The Project
-The purpose of project is to show an ability of code decryption with machine learning tools. Unlike Brute Force method, decription with ML uses patterns in dictionaries, which is more efficient.
+The purpose of this project is to demonstrate machine learning–based code decryption. Unlike brute force methods, ML-based decryption recognizes linguistic patterns, making it more efficient.
 
 ### Built With
 Languages:
@@ -53,10 +42,12 @@ Frameworks:
 * [![Flask](https://img.shields.io/badge/Flask-000?logo=flask&logoColor=fff)](#)
 
 Databases:
-* ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+* [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?logo=mongodb&logoColor=fff)](#)
 
 ## Getting Started
+
 ### Prerequisites
+* Make sure MongoDB service is running locally or remotely before launching the app.
 * Flask
   ```sh
   pip install Flask
@@ -69,8 +60,8 @@ Databases:
   ```sh
    pip install numpy
   ```
-### Installation
 
+### Installation
 1. Clone the repository
   ```sh
   git clone https://github.com/DaniilKhortov/file_exchanger_KhortovDP.git
@@ -87,48 +78,57 @@ Databases:
 
 ## Application launch 
 1. Run file run.py.
-2. If everything is set-up correctly, Flask will use device as a locale server and run app on http://127.0.0.1:8000
+  ```sh
+  python run.py
+  ```
+2. If everything is set-up correctly, Flask will start a local development server at http://127.0.0.1:8000 (or specified port).
+
 
 
 ## Project Structure
 ```bash
 < PROJECT ROOT >
    |
-   |-- app/
+   |-- app/                                # Core application directory
    |    |
-   |    | -- models.py                     # Database Tables
    |    | -- routes.py                     # Main functions to work with client
-   |    | -- utils.py                      # Helpers to manipulate date, files  
    |    | -- __init__.py                   # Initialization of flask app, connection to database
-   |    | -- accountsData.db               # Database
    |    |
-   |    |-- storage/                       # Stores files that were sent to server
+   |    |-- complete/                      # Stores working files
+   |    |    |
+   |    |    |-- Atbash.py                 # Decryptor for Atbash Language
+   |    |    |-- Caesar.py                 # Decryptor for Caesar Language
+   |    |    |-- Classificator.py          # ML module. Decides the type of inputed encryption method
+   |    |    |-- Pl.py                     # Decryptor for Pig Latin Language
+   |    |    |-- click_me.py               # Util, needed for decryptors
+   |    |    |-- main.py                   # Debug util
    |    |
+   |    |-- datasetsBackUP/                 # Stores dataset
+   |    |    |
+   |    |    |-- data.csv                   # Dataset for Caesar language. Uses real words
+   |    |    |-- dataA.csv                  # Dataset for Atbash language. Uses real words
+   |    |    |-- dataPL.csv                 # Dataset for Pig Latin language. Uses real words
+   |    |    |-- EnigmaticCodes.Atbash.csv  # Dataset for Atbash language. Uses generated words. Not effective
+   |    |    |-- EnigmaticCodes.Caesar.csv  # Dataset for Caesar language. Uses generated words. Not effective
+   |    |    |-- EnigmaticCodes.PL.csv      # Dataset for Pig Latin language. Uses generated words. Not effective
+   |    |    |
    |    |-- static/
-   |    |    |-- css/                  
-   |    |    |    |
+   |    |    |
+   |    |    |-- icon.ico 
+   |    |    |-- css/
+   |    |    |    |            
    |    |    |    |-- desktop.css          # Used by pages, provides adaptability of interface to the bigger screens
-   |    |    |    |-- reset.css            # Used by pages, sets basic html-elements parameters to 0
    |    |    |    |-- style.css            # Used by pages, responsible  for design 
    |    |    |-- js/                  
    |    |    |    |
-   |    |    |    |-- auth.js              # Responsible for keeping user authorized after closing window
-   |    |    |    |-- download.js          # Responsible for downloading files by user and admin
-   |    |    |    |-- elementsUtil.js      # Responsible for file upload and configuration by admin
-   |    |
+   |    |    |    |-- index.js              # Responsible for datatransfer between client and server
+   |    |    |
    |    |-- templates/
-   |    |    |    
+   |    |    |
    |    |    |-- index.html                # Main page
-   |    |    |-- login.html                # Authorization page
-   |    |    |-- register.html             # Registration page
-   |    |    |-- admin.html                # Modified main page for admin
-   |    |    |
-   |    |    |
-   |    |    |
-   |
-   |-- run.py                              # Starts the app 
-   |
-   |-- ************************************************************************
+   |    |
+   |-- run.py                              # Entry point for running Flask server
+   |-- text.txt                            # Source text used for dataset generation.  Currently it has several chapters from "All Quiet on Western Front"
 ```
 
 ## Database
@@ -142,7 +142,6 @@ Software uses MongoDB. Collections must look like this:
    |
    |-- PL/
    |
-   |-- ************************************************************************
 ```
 Every collection is a dictionary with encrypted word, decrypted word and keys.
 Datasets are located at BlackBox/app/datasetsBackUp. Caesar, Atbash and Pig Latin are named under data, dataA and dataPL accordingly.
